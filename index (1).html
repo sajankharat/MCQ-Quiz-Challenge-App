@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCQ Quiz App</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Welcome Screen -->
+        <div id="welcome-screen" class="screen active">
+            <div class="welcome-content">
+                <h1>🧠 MCQ Quiz Challenge</h1>
+                <p>Test your knowledge with our interactive quiz!</p>
+                
+                <div class="quiz-options">
+                    <div class="option-card">
+                        <h3>📚 Default Quiz</h3>
+                        <p>General knowledge questions</p>
+                        <button id="start-default-quiz" class="btn btn-primary">Start Quiz</button>
+                    </div>
+                    
+                    <div class="option-card">
+                        <h3>📁 Custom Quiz</h3>
+                        <p>Upload your own questions (JSON)</p>
+                        <input type="file" id="custom-quiz-file" accept=".json" style="display: none;">
+                        <button id="upload-custom-quiz" class="btn btn-secondary">Upload Questions</button>
+                    </div>
+                </div>
+                
+                <div class="instructions">
+                    <h4>How to play:</h4>
+                    <ul>
+                        <li>Answer multiple choice questions</li>
+                        <li>Each question has a time limit</li>
+                        <li>Get your score at the end</li>
+                        <li>Try to beat your best score!</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="quiz-screen" class="screen">
+            <div class="quiz-header">
+                <div class="quiz-info">
+                    <span class="question-counter">Question <span id="current-question">1</span> of <span id="total-questions">10</span></span>
+                    <div class="timer">
+                        <span id="time-left">30</span>s
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+            </div>
+
+            <div class="quiz-content">
+                <div class="question-container">
+                    <h2 id="question-text">Loading question...</h2>
+                </div>
+
+                <div class="options-container" id="options-container">
+                    <!-- Options will be dynamically generated -->
+                </div>
+
+                <div class="quiz-controls">
+                    <button id="next-question" class="btn btn-primary" disabled>Next Question</button>
+                    <button id="skip-question" class="btn btn-secondary">Skip</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="results-screen" class="screen">
+            <div class="results-content">
+                <div class="score-display">
+                    <h1>🎉 Quiz Complete!</h1>
+                    <div class="score-circle">
+                        <span id="final-score">0</span>
+                        <span class="score-total">/ <span id="total-score">10</span></span>
+                    </div>
+                    <div class="score-percentage" id="score-percentage">0%</div>
+                </div>
+
+                <div class="performance-stats">
+                    <div class="stat">
+                        <span class="stat-label">Correct Answers</span>
+                        <span class="stat-value" id="correct-answers">0</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Wrong Answers</span>
+                        <span class="stat-value" id="wrong-answers">0</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Skipped</span>
+                        <span class="stat-value" id="skipped-answers">0</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Time Taken</span>
+                        <span class="stat-value" id="time-taken">0:00</span>
+                    </div>
+                </div>
+
+                <div class="performance-message" id="performance-message">
+                    Great job!
+                </div>
+
+                <div class="results-actions">
+                    <button id="restart-quiz" class="btn btn-primary">Try Again</button>
+                    <button id="new-quiz" class="btn btn-secondary">New Quiz</button>
+                    <button id="review-answers" class="btn btn-outline">Review Answers</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Review Screen -->
+        <div id="review-screen" class="screen">
+            <div class="review-content">
+                <h2>📋 Answer Review</h2>
+                <div id="review-list">
+                    <!-- Review items will be dynamically generated -->
+                </div>
+                <button id="back-to-results" class="btn btn-primary">Back to Results</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="loading-spinner"></div>
+        <p>Loading quiz...</p>
+    </div>
+
+    <!-- Custom Quiz Instructions Modal -->
+    <div id="custom-quiz-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Custom Quiz JSON Format</h3>
+            <p>Your JSON file should follow this structure:</p>
+            <pre><code>{
+  "title": "My Custom Quiz",
+  "timePerQuestion": 30,
+  "questions": [
+    {
+      "question": "What is the capital of France?",
+      "options": ["London", "Berlin", "Paris", "Madrid"],
+      "correct": 2,
+      "explanation": "Paris is the capital and largest city of France."
+    }
+  ]
+}</code></pre>
+            <p><strong>Notes:</strong></p>
+            <ul>
+                <li><code>correct</code> is the index (0-based) of the correct answer</li>
+                <li><code>explanation</code> is optional but recommended</li>
+                <li><code>timePerQuestion</code> is in seconds (default: 30)</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
